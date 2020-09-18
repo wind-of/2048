@@ -6,18 +6,9 @@
         <h3>Enjoy!</h3>
       </div>
       <div class="gamebox">
-        <div 
-            class="row" 
-            v-for="(row, rowIdx) in matrix" 
-            :key="rowIdx"
-        >
-          <div 
-              class="box" 
-              v-for="({ score }, idx) in row" 
-              :key="rowIdx + String(idx)"
-              :style="boxStyles(score)"
-          >
-            {{ score ? score : "" }}
+        <div class="row" v-for="(row, rowIdx) in matrix" :key="rowIdx">
+          <div class="box" v-for="({ score }, idx) in row" :key="rowIdx + String(idx)" :style="boxStyles(score)">
+            {{ score || "" }}
           </div>
         </div>
       </div>
