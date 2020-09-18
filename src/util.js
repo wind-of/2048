@@ -11,9 +11,9 @@ export function createMatrix(matrixLength) {
 export function random(max, min) {
   return Math.floor(Math.random() * (max - min)) + min
 }
-export function findLastActiveBoxIdx(boxes) {
-  for(let idx = boxes.length - 1; idx >= 0; idx--) {
-    if(boxes[idx].active) {
+export function findLastIndex(array, predicate) {
+  for(let idx = array.length - 1; idx >= 0; idx--) {
+    if(predicate(array[idx])) {
       return idx
     }
   }

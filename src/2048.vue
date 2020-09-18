@@ -30,7 +30,7 @@
 
 <script>
 import { MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
-import { createMatrix, random, findLastActiveBoxIdx, resetBox } from "@/util.js"
+import { createMatrix, random, findLastIndex, resetBox } from "@/util.js"
 import { backgroundTypes, moves } from "@/static.js"
 export default {
   name: 'App',
@@ -78,7 +78,7 @@ export default {
             currentBox.score *= 2
             resetBox(nextActiveBox)
           }
-          const previousActiveBoxIdx = findLastActiveBoxIdx(singleLevelBoxes.slice(0, currentBoxIdx))
+          const previousActiveBoxIdx = findLastIndex(singleLevelBoxes.slice(0, currentBoxIdx), (box) => box.active)
           const moveCurrentBoxToIdx = singleLevelBoxes[previousActiveBoxIdx] ? previousActiveBoxIdx + 1 : 0
           const score = currentBox.score
           resetBox(currentBox)
