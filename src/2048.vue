@@ -71,8 +71,8 @@ export default {
     makeMove(direction) {
       const { UP, DOWN, RIGHT, LEFT } = DIRECTIONS
       for(let xCoordinate = 0; xCoordinate < MATRIX_SIZE; xCoordinate++) {
-        const arrayAddingMethod = [DOWN, RIGHT].includes(direction) ? "unshift" : "push"
         const singleLevelBoxes = []
+        const arrayAddingMethod = [DOWN, RIGHT].includes(direction) ? "unshift" : "push"
         for(let yCoordinate = 0; yCoordinate < MATRIX_SIZE; yCoordinate++) {
           const newItem = [DOWN, UP].includes(direction) 
                 ? this.matrix[yCoordinate][xCoordinate]
