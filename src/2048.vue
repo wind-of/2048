@@ -39,7 +39,7 @@
 
 <script>
 import { HEAVY_FONT_COLOR_BORDER, MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
-import { createMatrix, random, findLastActiveBoxIdx } from "@/util.js"
+import { createMatrix, random, findLastActiveBoxIdx, resetBox } from "@/util.js"
 import { backgroundTypes, moves } from "@/static.js"
 export default {
   name: 'App',
@@ -47,8 +47,7 @@ export default {
   moves,
 
   data() {
-    return {
-      
+    return { 
       matrix: createMatrix(MATRIX_SIZE),
       gameStarted: false,
     }
@@ -87,22 +86,17 @@ export default {
           const nextActiveBox = singleLevelBoxes.slice(currentBoxIdx + 1).find((box) => box.active)
           if(nextActiveBox && nextActiveBox.score === currentBox.score) {
             currentBox.score *= 2
-            this.resetBox(nextActiveBox)
+            resetBox(nextActiveBox)
           }
           const previousActiveBoxIdx = findLastActiveBoxIdx(singleLevelBoxes.slice(0, currentBoxIdx))
           const moveCurrentBoxToIdx = singleLevelBoxes[previousActiveBoxIdx] ? previousActiveBoxIdx + 1 : 0
           const score = currentBox.score
-          this.resetBox(currentBox)
+          resetBox(currentBox)
           singleLevelBoxes[moveCurrentBoxToIdx].score = score
           singleLevelBoxes[moveCurrentBoxToIdx].active = true
         }
       }
       this.activateBox(1)
-    },
-
-    resetBox(box) {
-      box.score = null
-      box.active = false
     },
 
     activateBox(amount = 1, startScore = START_SCORE) {

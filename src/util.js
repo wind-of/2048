@@ -18,3 +18,7 @@ export function findLastActiveBoxIdx(boxes) {
     }
   }
 }
+export function resetBox(box) {
+  box.score = null
+  box.active = false
+}
