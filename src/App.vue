@@ -23,7 +23,7 @@
       </div>
       <div class="controls">
         <div class="move-keys" v-if="gameStarted">
-          <template v-for="({ direction, character }, idx) in moves">
+          <template v-for="({ direction, character }, idx) in $options.moves">
             <button :key="character + direction + idx " @click="makeMove(direction)">
               {{ character }}
             </button>
@@ -44,9 +44,11 @@ import { backgroundTypes, moves } from "@/static.js"
 export default {
   name: 'App',
 
+  moves,
+
   data() {
     return {
-      moves,
+      
       matrix: createMatrix(MATRIX_SIZE),
       gameStarted: false,
     }
