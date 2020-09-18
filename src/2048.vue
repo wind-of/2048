@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { HEAVY_FONT_COLOR_BORDER, MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
+import { MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
 import { createMatrix, random, findLastActiveBoxIdx, resetBox } from "@/util.js"
 import { backgroundTypes, moves } from "@/static.js"
 export default {
@@ -48,8 +48,7 @@ export default {
     boxStyles(score) {
       const degree = Math.log2(score)
       return { 
-        backgroundColor: score ? backgroundTypes[degree] : "",
-        color: degree <= HEAVY_FONT_COLOR_BORDER ? "#333" : "#ccc"
+        backgroundColor: backgroundTypes[Number.isSafeInteger(degree) ? degree : 0],
       }
     },
 
@@ -155,6 +154,7 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 .box-wrapper .gamebox .box{
   font-weight: 500;
+  color: whitesmoke;
   width: 100px;
   height: 100px;
   border: 1px solid #ddd;

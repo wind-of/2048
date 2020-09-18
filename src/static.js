@@ -18,4 +18,4 @@ export const moves = [
     character: "←"
   }
 ]
-export const backgroundTypes = [, "#7BF5F6", "#5AC5FB", "#004156", "#70E852", "#35D073", "#2DAF61", "#F0EEF1", "#D1D3D4", "#BCBEC0", "#6D6E71", "#414042"]
+export const backgroundTypes = ["", "#00d2d3", "#54a0ff", "#5f27cd", "#feca57", "#ff6b6b", "#48dbfb", "#1dd1a1", "#c8d6e5", "#576574", "#222f3e"]
