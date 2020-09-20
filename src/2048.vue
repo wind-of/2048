@@ -47,9 +47,9 @@ export default {
   watch: {
     gameStarted(isStarted) {
       if(isStarted) 
-        window.addEventListener('keyup', this.keypressEventHandler)
+        window.addEventListener('keydown', this.keypressEventHandler)
       else 
-        window.removeEventListener('keyup', this.keypressEventHandler)
+        window.removeEventListener('keydown', this.keypressEventHandler)
     }
   },
 
@@ -116,14 +116,14 @@ export default {
     },
 
     keypressEventHandler({ key, repeat }) {
-      if (!'wsad'.includes(key) || repeat) {
+      if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key) || repeat) {
         return
       }
       const mapKeyToDirection = {
-        'w': DIRECTIONS.UP,
-        's': DIRECTIONS.DOWN,
-        'a': DIRECTIONS.LEFT,
-        'd': DIRECTIONS.RIGHT,
+        'ArrowUp': DIRECTIONS.UP,
+        'ArrowDown': DIRECTIONS.DOWN,
+        'ArrowLeft': DIRECTIONS.LEFT,
+        'ArrowRight': DIRECTIONS.RIGHT,
       }
       this.makeMove(mapKeyToDirection[key])
     },
