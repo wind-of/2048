@@ -44,6 +44,15 @@ export default {
     }
   },
 
+  watch: {
+    gameStarted(isStarted) {
+      if(isStarted) 
+        window.addEventListener('keyup', this.keypressEventHandler)
+      else 
+        window.removeEventListener('keyup', this.keypressEventHandler)
+    }
+  },
+
   methods: {
     boxStyles(score) {
       const degree = Math.log2(score)
@@ -104,7 +113,20 @@ export default {
         current.active = true
         current.score = startScore
       }
-    }
+    },
+
+    keypressEventHandler({ key, repeat }) {
+      if (!'wsad'.includes(key) || repeat) {
+        return
+      }
+      const mapKeyToDirection = {
+        'w': DIRECTIONS.UP,
+        's': DIRECTIONS.DOWN,
+        'a': DIRECTIONS.LEFT,
+        'd': DIRECTIONS.RIGHT,
+      }
+      this.makeMove(mapKeyToDirection[key])
+    },
   },
 }
 </script>
