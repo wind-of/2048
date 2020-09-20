@@ -30,7 +30,7 @@
 
 <script>
 import { MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
-import { createMatrix, random, findLastIndex, resetBox } from "@/util.js"
+import { createMatrix, random, findLastIndex, resetBox, oneOf } from "@/util.js"
 import { backgroundTypes, moves } from "@/static.js"
 export default {
   name: 'App',
@@ -55,9 +55,8 @@ export default {
 
   methods: {
     boxStyles(score) {
-      const degree = Math.log2(score)
       return { 
-        backgroundColor: backgroundTypes[Number.isSafeInteger(degree) ? degree : 0],
+        backgroundColor: backgroundTypes[Math.log2(score || 1)],
       }
     },
 
@@ -70,9 +69,9 @@ export default {
       const { UP, DOWN, RIGHT, LEFT } = DIRECTIONS
       for(let xCoordinate = 0; xCoordinate < MATRIX_SIZE; xCoordinate++) {
         const singleLevelBoxes = []
-        const arrayAddingMethod = [DOWN, RIGHT].includes(direction) ? "unshift" : "push"
+        const arrayAddingMethod = oneOf(direction, DOWN, RIGHT) ? "unshift" : "push"
         for(let yCoordinate = 0; yCoordinate < MATRIX_SIZE; yCoordinate++) {
-          const newItem = [DOWN, UP].includes(direction) 
+          const newItem = oneOf(direction, DOWN, UP)
                 ? this.matrix[yCoordinate][xCoordinate]
                 : this.matrix[xCoordinate][yCoordinate]
           singleLevelBoxes[arrayAddingMethod](newItem)
