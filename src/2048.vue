@@ -104,7 +104,30 @@ export default {
         current.active = true
         current.score = startScore
       }
-    }
+    },
+
+    keypressEventHandler(event) {
+      if (this.gameStarted) {
+        const key = event.key;
+        if ('wsad'.includes(key)) {
+          const mapKeyToDirection = {
+            'w': DIRECTIONS.UP,
+            's': DIRECTIONS.DOWN,
+            'a': DIRECTIONS.LEFT,
+            'd': DIRECTIONS.RIGHT,
+          }
+          this.makeMove(mapKeyToDirection[key])
+        }
+      }
+    },
+  },
+
+  created() {
+    window.addEventListener('keyup', this.keypressEventHandler);
+  },
+
+  destroyed() {
+    window.removeEventListener('keyup', this.keypressEventHandler);
   },
 }
 </script>
