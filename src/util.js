@@ -22,6 +22,6 @@ export function resetBox(box) {
   box.score = null
   box.active = false
 }
-export function oneOf(element, ...element) {
+export function oneOf(element, ...elements) {
   return elements.includes(element)
 }
