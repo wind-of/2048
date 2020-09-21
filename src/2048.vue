@@ -6,21 +6,32 @@
         <h3>Enjoy!</h3>
       </div>
       <div class="gamebox">
-        <div class="row" v-for="(row, rowIdx) in matrix" :key="rowIdx">
-          <div class="box" v-for="({ score }, idx) in row" :key="rowIdx + String(idx)" :style="boxStyles(score)">
+        <div 
+            class="row" 
+            v-for="(row, rowIdx) in matrix" 
+            :key="rowIdx"
+            >
+          <div 
+              class="box" 
+              v-for="({ score }, idx) in row" 
+              :key="rowIdx + String(idx)" 
+              :style="{ backgroundColor: getBackgroundColor(score) }"
+              >
             {{ score || "" }}
           </div>
         </div>
       </div>
       <div class="controls">
         <div class="move-keys" v-if="gameStarted">
-          <template v-for="({ direction, character }, idx) in $options.moves">
-            <button :key="character + direction + idx " @click="makeMove(direction)">
-              {{ character }}
-            </button>
-          </template>
+          <button 
+              v-for="({ direction, character }, idx) in $options.moves" 
+              :key="character + direction + idx" 
+              @click="makeMove(direction)"
+              >
+            {{ character }}
+          </button>
         </div>
-        <button @click="start" v-else>
+        <button @click="startGame" v-else>
           Start
         </button>
       </div>
@@ -58,13 +69,11 @@ export default {
   },
 
   methods: {
-    boxStyles(score) {
-      return { 
-        backgroundColor: backgroundTypes[Math.log2(score || 1)],
-      }
+    getBackgroundColor(score) {
+      return backgroundTypes[Math.log2(score || 1)]
     },
 
-    start() {
+    startGame() {
       this.gameStarted = true
       this.activateBox(2)
     },
@@ -105,7 +114,7 @@ export default {
         }
       }
       if(!isMoveUseless) {
-        this.activateBox(1)
+        this.activateBox()
       }
     },
 
