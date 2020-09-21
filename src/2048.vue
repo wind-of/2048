@@ -66,6 +66,7 @@ export default {
     },
 
     makeMove(direction) {
+      let isMoveUseless = true
       const { UP, DOWN, RIGHT, LEFT } = DIRECTIONS
       for(let xCoordinate = 0; xCoordinate < MATRIX_SIZE; xCoordinate++) {
         const singleLevelBoxes = []
@@ -85,16 +86,23 @@ export default {
           if(nextActiveBox && nextActiveBox.score === currentBox.score) {
             currentBox.score *= 2
             resetBox(nextActiveBox)
+            isMoveUseless = false
           }
           const previousActiveBoxIdx = findLastIndex(singleLevelBoxes.slice(0, currentBoxIdx), (box) => box.active)
           const moveCurrentBoxToIdx = singleLevelBoxes[previousActiveBoxIdx] ? previousActiveBoxIdx + 1 : 0
+          if(currentBoxIdx === moveCurrentBoxToIdx) {
+            continue
+          }
           const score = currentBox.score
           resetBox(currentBox)
           singleLevelBoxes[moveCurrentBoxToIdx].score = score
           singleLevelBoxes[moveCurrentBoxToIdx].active = true
+          isMoveUseless = false
         }
       }
-      this.activateBox(1)
+      if(!isMoveUseless) {
+        this.activateBox(1)
+      }
     },
 
     activateBox(amount = 1, startScore = START_SCORE) {
