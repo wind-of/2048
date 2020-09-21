@@ -41,15 +41,19 @@ export default {
     return { 
       matrix: createMatrix(MATRIX_SIZE),
       gameStarted: false,
+      touchStartCoordinate: {
+        x: null,
+        y: null
+      }
     }
   },
 
   watch: {
     gameStarted(isStarted) {
-      if(isStarted) 
-        window.addEventListener('keydown', this.keypressEventHandler)
-      else 
-        window.removeEventListener('keydown', this.keypressEventHandler)
+      const listenerControlMethod = isStarted ? "addEventListener" : "removeEventListener"
+      window[listenerControlMethod]('keydown', this.keypressEventHandler)
+      window[listenerControlMethod]('touchstart', this.touchStartHandler)
+      window[listenerControlMethod]('touchend', this.touchEndHandler)
     }
   },
 
@@ -130,6 +134,21 @@ export default {
       }
       this.makeMove(mapKeyToDirection[key])
     },
+
+    touchStartHandler({ changedTouches: [{ pageX, pageY }] }) {
+      this.touchStartCoordinate.x = pageX
+      this.touchStartCoordinate.y = pageY
+    },
+    touchEndHandler({ changedTouches: [{ pageX, pageY }] }) {
+      const horizontalDifference = this.touchStartCoordinate.x - pageX
+      const verticalDifference = this.touchStartCoordinate.y - pageY
+
+      if(Math.abs(verticalDifference) > Math.abs(horizontalDifference)) {
+        this.makeMove(DIRECTIONS[verticalDifference > 0 ? "UP" : "DOWN"])
+      } else {
+        this.makeMove(DIRECTIONS[horizontalDifference > 0 ? "LEFT" : "RIGHT"])
+      }
+    }
   },
 }
 </script>
