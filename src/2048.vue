@@ -106,19 +106,15 @@ export default {
     },
 
     activateBox(amount = 1, startScore = START_SCORE) {
-      const activeBoxes = new Set()
-      for(let count = 0; count < amount; count++) {
+      for(let count = 0, activeBoxes = new Set(); count < amount && activeBoxes.size !== MATRIX_SIZE**2; count++) {
         const current = this.matrix[random(MATRIX_SIZE, 0)][random(MATRIX_SIZE, 0)]
-        if(activeBoxes.size === MATRIX_SIZE**2) {
-          break
-        }
         if(current.active) {
           activeBoxes.add(current)
           --count
           continue
         }
         current.active = true
-        current.score = startScore
+        current.score = startScore * (Math.random() > .95 ? 2 : 1)
       }
     },
 
