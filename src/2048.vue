@@ -22,7 +22,10 @@
         </div>
       </div>
       <div class="controls">
-        <button @click="startGame">
+        <button @click="endGame"  v-if="gameStarted">
+          End
+        </button>
+        <button @click="startGame" v-else>
           Start
         </button>
       </div>
@@ -65,6 +68,11 @@ export default {
     startGame() {
       this.gameStarted = true
       this.activateBox(2)
+    },
+
+    endGame() {
+      this.gameStarted = false
+      this.matrix = createMatrix(MATRIX_SIZE)
     },
 
     makeMove(direction) {
