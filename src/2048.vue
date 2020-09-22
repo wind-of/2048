@@ -3,7 +3,7 @@
     <div class="box-wrapper">
       <div class="title">
         <h1>2048</h1>
-        <h3>Enjoy!</h3>
+        <h4>Use arrow keys to play</h4>
       </div>
       <div class="gamebox">
         <div 
@@ -22,16 +22,7 @@
         </div>
       </div>
       <div class="controls">
-        <div class="move-keys" v-if="gameStarted">
-          <button 
-              v-for="({ direction, character }, idx) in controls()" 
-              :key="character + direction + idx" 
-              @click="makeMove(direction)"
-              >
-            {{ character }}
-          </button>
-        </div>
-        <button @click="startGame" v-else>
+        <button @click="startGame">
           Start
         </button>
       </div>
@@ -42,7 +33,7 @@
 <script>
 import { MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
 import { createMatrix, random, findLastIndex, resetBox, oneOf } from "@/util.js"
-import { backgroundTypes, controls } from "@/static.js"
+import { backgroundTypes } from "@/static.js"
 export default {
   name: 'App',
 
@@ -67,10 +58,6 @@ export default {
   },
 
   methods: {
-    controls() {
-      return controls
-    },
-    
     getBackgroundColor(score) {
       return backgroundTypes[Math.log2(score || 1)]
     },
