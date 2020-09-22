@@ -1,6 +1,6 @@
 import { DIRECTIONS } from "@/constants.js"
 
-export const moves = [
+export const controls = [
   {
     direction: DIRECTIONS.UP,
     character: "↑"

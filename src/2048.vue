@@ -24,7 +24,7 @@
       <div class="controls">
         <div class="move-keys" v-if="gameStarted">
           <button 
-              v-for="({ direction, character }, idx) in $options.moves" 
+              v-for="({ direction, character }, idx) in controls()" 
               :key="character + direction + idx" 
               @click="makeMove(direction)"
               >
@@ -42,11 +42,9 @@
 <script>
 import { MATRIX_SIZE, START_SCORE, DIRECTIONS } from "@/constants.js"
 import { createMatrix, random, findLastIndex, resetBox, oneOf } from "@/util.js"
-import { backgroundTypes, moves } from "@/static.js"
+import { backgroundTypes, controls } from "@/static.js"
 export default {
   name: 'App',
-
-  moves,
 
   data() {
     return { 
@@ -62,13 +60,17 @@ export default {
   watch: {
     gameStarted(isStarted) {
       const listenerControlMethod = isStarted ? "addEventListener" : "removeEventListener"
-      window[listenerControlMethod]('keydown', this.keypressEventHandler)
+      window[listenerControlMethod]('keydown', this.keypressHandler)
       window[listenerControlMethod]('touchstart', this.touchStartHandler)
       window[listenerControlMethod]('touchend', this.touchEndHandler)
     }
   },
 
   methods: {
+    controls() {
+      return controls
+    },
+    
     getBackgroundColor(score) {
       return backgroundTypes[Math.log2(score || 1)]
     },
@@ -131,7 +133,7 @@ export default {
       }
     },
 
-    keypressEventHandler({ key, repeat }) {
+    keypressHandler({ key, repeat }) {
       if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key) || repeat) {
         return
       }
@@ -148,6 +150,7 @@ export default {
       this.touchStartCoordinate.x = pageX
       this.touchStartCoordinate.y = pageY
     },
+
     touchEndHandler({ changedTouches: [{ pageX, pageY }] }) {
       const horizontalDifference = this.touchStartCoordinate.x - pageX
       const verticalDifference = this.touchStartCoordinate.y - pageY
