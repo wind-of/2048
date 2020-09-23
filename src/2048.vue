@@ -3,7 +3,7 @@
     <div class="box-wrapper">
       <div class="title">
         <h1>2048</h1>
-        <h4>Use arrow keys to play</h4>
+        <h4>Use the arrow keys or swipe to the sides to play</h4>
       </div>
       <div class="gamebox">
         <div 
@@ -22,12 +22,12 @@
         </div>
       </div>
       <div class="controls">
-        <button @click="endGame"  v-if="gameStarted">
+        <a class="end-button" @click="endGame" v-if="gameStarted">
           End
-        </button>
-        <button @click="startGame" v-else>
+        </a>
+        <a class="start-button" @click="startGame" v-else>
           Start
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -203,7 +203,7 @@ body, h1, h2, h3, h4, h5, h6 {
 .box-wrapper .title h1, .box-wrapper .title h3 {
   margin: 5px 0;
 }
-.box-wrapper .gamebox .box{
+.box-wrapper .gamebox .box {
   font-weight: 500;
   color: whitesmoke;
   width: 100px;
@@ -216,7 +216,56 @@ body, h1, h2, h3, h4, h5, h6 {
 .box-wrapper .gamebox .row {
   display: flex;
 }
-.box-wrapper .controls .move-keys button{
-  margin: 0 3px;
+.box-wrapper .controls a {
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  width: 100px;
+  line-height: 45px;
+  border-radius: 45px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: rgb(252, 252, 252);
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  transition: .3s;
+}
+.box-wrapper .controls a:hover {
+  background: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46,229,157,.4);
+  color: white;
+  transform: translateY(-3px);
+}
+
+@media only screen and (max-width: 768px) {
+  .box-wrapper {
+    width: 900px;
+    height: 600px;
+  }
+  .box-wrapper .gamebox .box {
+    font-size: 14px;
+    width: 70px;
+    height: 70px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .box-wrapper {
+    width: 800px;
+    height: 500px;
+  }
+  .box-wrapper .title {
+    font-size: 14px;
+  }
+  .box-wrapper .gamebox .box {
+    font-size: 14px;
+    width: 65px;
+    height: 65px;
+  }
 }
 </style>
