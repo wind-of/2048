@@ -212,6 +212,7 @@ body, h1, h2, h3, h4, h5, h6 {
   margin: 5px 0;
 }
 .box-wrapper .gamebox .box {
+  font-size: 18px;
   font-weight: 500;
   color: whitesmoke;
   width: 100px;
