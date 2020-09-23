@@ -77,7 +77,7 @@ export default {
 
     makeMove(direction) {
       let isMoveUseless = true
-      const { UP, DOWN, RIGHT, LEFT } = DIRECTIONS
+      const { UP, DOWN, RIGHT } = DIRECTIONS
       for(let xCoordinate = 0; xCoordinate < MATRIX_SIZE; xCoordinate++) {
         const singleLevelBoxes = []
         const arrayAddingMethod = oneOf(direction, DOWN, RIGHT) ? "unshift" : "push"
@@ -94,8 +94,8 @@ export default {
           }
           const nextActiveBox = singleLevelBoxes.slice(currentBoxIdx + 1).find((box) => box.active)
           if(nextActiveBox && nextActiveBox.score === currentBox.score) {
-            currentBox.score *= 2
             resetBox(nextActiveBox)
+            currentBox.score *= 2
             isMoveUseless = false
           }
           const previousActiveBoxIdx = findLastIndex(singleLevelBoxes.slice(0, currentBoxIdx), (box) => box.active)
@@ -120,7 +120,7 @@ export default {
         const current = this.matrix[random(MATRIX_SIZE, 0)][random(MATRIX_SIZE, 0)]
         if(current.active) {
           activeBoxes.add(current)
-          --count
+          count--
           continue
         }
         current.active = true
@@ -260,10 +260,10 @@ body, h1, h2, h3, h4, h5, h6 {
     height: 500px;
   }
   .box-wrapper .title {
-    font-size: 14px;
+    font-size: 15px;
   }
   .box-wrapper .gamebox .box {
-    font-size: 14px;
+    font-size: 16px;
     width: 65px;
     height: 65px;
   }
