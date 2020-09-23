@@ -55,8 +55,8 @@ export default {
     gameStarted(isStarted) {
       const listenerControlMethod = isStarted ? "addEventListener" : "removeEventListener"
       window[listenerControlMethod]('keydown', this.keypressHandler)
-      window[listenerControlMethod]('touchstart', this.touchStartHandler)
-      window[listenerControlMethod]('touchend', this.touchEndHandler)
+      window[listenerControlMethod]('touchstart', this.touchStartHandler, { passive: false })
+      window[listenerControlMethod]('touchend', this.touchEndHandler, { passive: false })
     }
   },
 
@@ -141,12 +141,16 @@ export default {
       this.makeMove(mapKeyToDirection[key])
     },
 
-    touchStartHandler({ changedTouches: [{ pageX, pageY }] }) {
+    touchStartHandler(event) {
+      event.preventDefault()
+      const { changedTouches: [{ pageX, pageY }] } = event
       this.touchStartCoordinate.x = pageX
       this.touchStartCoordinate.y = pageY
     },
 
-    touchEndHandler({ changedTouches: [{ pageX, pageY }] }) {
+    touchEndHandler(event) { 
+      event.preventDefault()
+      const { changedTouches: [{ pageX, pageY }] } = event
       const horizontalDifference = this.touchStartCoordinate.x - pageX
       const verticalDifference = this.touchStartCoordinate.y - pageY
 
