@@ -4,6 +4,9 @@
       <div class="title">
         <h1>2048</h1>
         <h4>Use the arrow keys or swipe to the sides to play</h4>
+        <h2 v-if="userWon">
+          You won! 
+        </h2>
       </div>
       <div class="gamebox">
         <div 
@@ -44,6 +47,7 @@ export default {
     return { 
       matrix: createMatrix(MATRIX_SIZE),
       gameStarted: false,
+      userWon: false,
       touchStartCoordinate: {
         x: null,
         y: null
@@ -65,14 +69,20 @@ export default {
       return backgroundTypes[Math.log2(score || 1)]
     },
 
+    handleVictory() {
+      this.userWon = true
+      this.endGame()
+    },
+
     startGame() {
       this.gameStarted = true
+      this.userWon = false
+      this.matrix = createMatrix(MATRIX_SIZE)
       this.activateBox(2)
     },
 
     endGame() {
       this.gameStarted = false
-      this.matrix = createMatrix(MATRIX_SIZE)
     },
 
     makeMove(direction) {
@@ -97,6 +107,9 @@ export default {
             resetBox(nextActiveBox)
             currentBox.score *= 2
             isMoveUseless = false
+          }
+          if(currentBox.score === 2048) {
+            this.handleVictory()
           }
           const previousActiveBoxIdx = findLastIndex(singleLevelBoxes.slice(0, currentBoxIdx), (box) => box.active)
           const moveCurrentBoxToIdx = singleLevelBoxes[previousActiveBoxIdx] ? previousActiveBoxIdx + 1 : 0
