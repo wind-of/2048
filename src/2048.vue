@@ -259,11 +259,17 @@ body, h1, h2, h3, h4, h5, h6 {
   transition: .3s;
 }
 .box-wrapper .controls a:hover {
+  color: white;
+  transform: translateY(-2px);
+}
+.box-wrapper .controls .start-button:hover {
   background: #2EE59D;
   box-shadow: 0 15px 20px rgba(46,229,157,.4);
-  color: white;
-  transform: translateY(-3px);
-}
+} 
+.box-wrapper .controls .end-button:hover {
+  background: #e5532e;
+  box-shadow: 0 15px 20px #ff6b6ba2;
+} 
 
 @media only screen and (max-width: 768px) {
   .box-wrapper {
